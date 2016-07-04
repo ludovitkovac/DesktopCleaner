@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="395.0" prefWidth="660.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desktopcleaner.FXMLDocumentController">
+    <children>
+        <Button fx:id="button" defaultButton="true" layoutX="143.0" layoutY="227.0" onAction="#handleButtonAction" prefHeight="109.0" prefWidth="374.0" text="MOVE FILES TO FOLDERS" textAlignment="CENTER">
+         <font>
+            <Font name="Times New Roman" size="24.0" />
+         </font>
+      </Button>
+      <CheckBox fx:id="chBoxPictures" layoutX="344.0" layoutY="158.0" mnemonicParsing="false" selected="true" text="Pictures" />
+      <CheckBox fx:id="chBoxVideos" layoutX="438.0" layoutY="158.0" mnemonicParsing="false" selected="true" text="Videos" />
+      <CheckBox fx:id="chBoxDocuments" layoutX="143.0" layoutY="158.0" mnemonicParsing="false" selected="true" text="Documents" />
+      <CheckBox fx:id="chBoxMusic" layoutX="258.0" layoutY="158.0" mnemonicParsing="false" selected="true" text="Music" />
+      <Label fx:id="label" alignment="CENTER" contentDisplay="CENTER" layoutX="143.0" layoutY="344.0" prefHeight="37.0" prefWidth="374.0" />
+      <TextField fx:id="prefixTextField" alignment="TOP_LEFT" layoutX="347.0" layoutY="88.0" prefHeight="31.0" prefWidth="154.0" text="DC_">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </TextField>
+      <Label alignment="CENTER" layoutX="129.0" layoutY="88.0" prefHeight="57.0" prefWidth="201.0" text="SET PREFIX:">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutY="56.0" prefHeight="21.0" prefWidth="660.0" text="This application moves files from desktop to new categorized desktop's folders " />
+      <Label layoutX="19.0" layoutY="14.0" prefHeight="27.0" prefWidth="310.0" text="DesktopCleaner 1.0 (for Windows)" textFill="#c62525">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <CheckBox fx:id="chBoxCompressed" layoutX="143.0" layoutY="187.0" mnemonicParsing="false" text="Compressed" />
+      <CheckBox fx:id="chBoxNotepad" layoutX="258.0" layoutY="187.0" mnemonicParsing="false" text="Notepad" />
+    </children>
+   <effect>
+      <SepiaTone />
+   </effect>
+</AnchorPane>
