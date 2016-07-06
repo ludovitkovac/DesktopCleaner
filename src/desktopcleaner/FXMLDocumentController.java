@@ -1,4 +1,5 @@
 package desktopcleaner;
+// @author Ľudovít "Luigi" Kováč
 
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +16,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-// @author Ľudovít "Luigi" Kováč
 public class FXMLDocumentController implements Initializable {
 
     @FXML
@@ -44,9 +44,35 @@ public class FXMLDocumentController implements Initializable {
 
     private String prefix;
 
+    File[] Desktopfiles = new File(System.getProperty("user.home") + "/desktop").listFiles();
+
+    String[] documentSuffixes = {".pdf", ".txt", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".rtf"};
+    String[] musicSuffixes = {".mp3", ".wav", ".flac", ".wma"};
+    String[] pictureSuffixes = {".jpg", ".jpeg", ".gif", ".bmp", ".png"};
+    String[] VideoSuffixes = {".mp4", ".avi", ".3gp", ".mpeg", ".mpg", ".mkv", ".m4v", ".flv", ".srt"};
+    String[] CompressedSuffixes = {".zip", ".rar", ".7z", ".cab", ".ace", ".alz", ".arj", ".bz2", ".bzip2", ".gzip", ".tar", ".tar.gz", ".lzma", ".lzip"};
+
     private void createFolder(String FolderType) {
 
         new File(System.getProperty("user.home") + "/desktop/" + prefix + FolderType).mkdirs();
+
+    }
+
+    private void suffixCompare(File file, CheckBox checkBoxName, String[] fieldOfSuffixs, String typeOfFile) throws IOException {
+
+        if (checkBoxName.isSelected()) {
+
+            for (String string : fieldOfSuffixs) {
+
+                if (file.toString().endsWith(string)) {
+
+                    moveToFolder(file, typeOfFile);
+
+                }
+
+            }
+
+        }
 
     }
 
@@ -74,9 +100,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void handleButtonAction(ActionEvent event) throws IOException {
-
-        label.setText("");
+    private void handleButtonAction(ActionEvent event) throws IOException, InterruptedException {
 
         if (usePrefix.isSelected()) {
 
@@ -128,101 +152,42 @@ public class FXMLDocumentController implements Initializable {
 
         }
 
-        File[] Desktopfiles = new File(System.getProperty("user.home") + "/desktop").listFiles();
-
         for (File file : Desktopfiles) {
 
             try {
 
                 if (chBoxDocuments.isSelected()) {
 
-                    if (file.toString().endsWith(".pdf")
-                            || file.toString().endsWith(".txt")
-                            || file.toString().endsWith(".doc")
-                            || file.toString().endsWith(".docx")
-                            || file.toString().endsWith(".xls")
-                            || file.toString().endsWith(".xlsx")
-                            || file.toString().endsWith(".ppt")
-                            || file.toString().endsWith(".pptx")
-                            || file.toString().endsWith(".rtf")) {
-
-                        moveToFolder(file, "Documents");
-
-                    }
+                    suffixCompare(file, chBoxDocuments, documentSuffixes, "Documents");
 
                 }
 
                 if (chBoxMusic.isSelected()) {
 
-                    if (file.toString().endsWith(".mp3")
-                            || file.toString().endsWith(".wav")
-                            || file.toString().endsWith(".flac")
-                            || file.toString().endsWith(".wma")) {
-
-                        moveToFolder(file, "Music");
-
-                    }
+                    suffixCompare(file, chBoxMusic, musicSuffixes, "Music");
                 }
 
                 if (chBoxPictures.isSelected()) {
 
-                    if (file.toString().endsWith(".jpg")
-                            || file.toString().endsWith(".jpeg")
-                            || file.toString().endsWith(".gif")
-                            || file.toString().endsWith(".bmp")
-                            || file.toString().endsWith(".png")) {
-
-                        moveToFolder(file, "Pictures");
-
-                    }
+                    suffixCompare(file, chBoxPictures, pictureSuffixes, "Pictures");
 
                 }
 
                 if (chBoxVideos.isSelected()) {
-                    if (file.toString().endsWith(".mp4")
-                            || file.toString().endsWith(".avi")
-                            || file.toString().endsWith(".3gp")
-                            || file.toString().endsWith(".mpeg")
-                            || file.toString().endsWith(".mpg")
-                            || file.toString().endsWith(".mkv")
-                            || file.toString().endsWith(".m4v")
-                            || file.toString().endsWith(".flv")
-                            || file.toString().endsWith(".srt")) {
 
-                        moveToFolder(file, "Videos");
+                    suffixCompare(file, chBoxVideos, VideoSuffixes, "Videos");
 
-                    }
                 }
 
                 if (chBoxCompressed.isSelected()) {
 
-                    if (file.toString().endsWith(".zip")
-                            || file.toString().endsWith(".rar")
-                            || file.toString().endsWith(".7z")
-                            || file.toString().endsWith(".cab")
-                            || file.toString().endsWith(".ace")
-                            || file.toString().endsWith(".alz")
-                            || file.toString().endsWith(".arj")
-                            || file.toString().endsWith(".bz2")
-                            || file.toString().endsWith(".bzip2")
-                            || file.toString().endsWith(".gzip")
-                            || file.toString().endsWith(".tar")
-                            || file.toString().endsWith(".tar.gz")
-                            || file.toString().endsWith(".lzma")
-                            || file.toString().endsWith(".lzip")) {
-
-                        moveToFolder(file, "Compressed");
-
-                    }
+                    suffixCompare(file, chBoxCompressed, CompressedSuffixes, "Compressed");
                 }
             } catch (Exception e) {
 
             }
         }
-
-        if (label.getText().equals("")) {
-            label.setText("Done.");
-        }
+        label.setText("Done.");
 
     }
 

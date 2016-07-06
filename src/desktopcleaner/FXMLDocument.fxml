@@ -34,10 +34,11 @@
         <Label alignment="CENTER" layoutY="14.0" prefHeight="21.0" prefWidth="660.0" text="This application moves files from desktop to new categorized desktop's folders " />
         <CheckBox fx:id="chBoxCompressed" layoutX="419.0" layoutY="81.0" mnemonicParsing="false" text="Compressed" />
         <CheckBox fx:id="usePrefix" layoutX="19.0" layoutY="49.0" mnemonicParsing="false" onAction="#usePrefixMethod" prefHeight="57.0" prefWidth="104.0" selected="true" text="Use prefix">
-         <font>
-            <Font size="16.0" />
-         </font></CheckBox>
-      <Separator layoutX="284.0" layoutY="49.0" orientation="VERTICAL" prefHeight="176.0" prefWidth="6.0" />
+            <font>
+                <Font size="16.0" />
+            </font>
+        </CheckBox>
+        <Separator layoutX="284.0" layoutY="49.0" orientation="VERTICAL" prefHeight="176.0" prefWidth="6.0" />
     </children>
     <effect>
         <SepiaTone />
