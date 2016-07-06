@@ -22,6 +22,9 @@ public class FXMLDocumentController implements Initializable {
     private TextField prefixTextField;
 
     @FXML
+    private CheckBox usePrefix;
+
+    @FXML
     private Label label;
 
     @FXML
@@ -37,74 +40,113 @@ public class FXMLDocumentController implements Initializable {
     private CheckBox chBoxMusic;
 
     @FXML
-    private CheckBox chBoxNotepad;
+    private CheckBox chBoxCompressed;
+
+    private String prefix;
+
+    private void createFolder(String FolderType) {
+
+        new File(System.getProperty("user.home") + "/desktop/" + prefix + FolderType).mkdirs();
+
+    }
+
+    private void moveToFolder(File file, String FolderType) throws IOException {
+
+        Path fileMove = Paths.get(System.getProperty("user.home") + "/desktop/" + prefix + FolderType + "/" + file.getName());
+
+        Files.move(file.toPath(), fileMove, StandardCopyOption.REPLACE_EXISTING);
+
+    }
 
     @FXML
-    private CheckBox chBoxCompressed;
+    private void usePrefixMethod(ActionEvent event) {
+
+        if (usePrefix.isSelected()) {
+            prefixTextField.setText("DC_");
+            prefixTextField.setDisable(false);
+
+        } else {
+            prefixTextField.setText("");
+            prefixTextField.setDisable(true);
+
+        }
+
+    }
 
     @FXML
     private void handleButtonAction(ActionEvent event) throws IOException {
 
         label.setText("");
 
-        String prefix = prefixTextField.getText();
+        if (usePrefix.isSelected()) {
 
-        if (prefix.endsWith("_")) {
+            prefix = prefixTextField.getText();
+
+            if (prefix.endsWith("_")) {
+
+            } else {
+
+                prefix = prefix + "_";
+
+            }
 
         } else {
 
-            prefix = prefix + "_";
+            prefix = "";
 
         }
+
         try {
 
             if (chBoxDocuments.isSelected()) {
 
-                new File(System.getProperty("user.home") + "/desktop/" + prefix + "Documents").mkdirs();
+                createFolder("Documents");
             }
 
             if (chBoxMusic.isSelected()) {
 
-                new File(System.getProperty("user.home") + "/desktop/" + prefix + "Music").mkdirs();
+                createFolder("Music");
             }
 
             if (chBoxPictures.isSelected()) {
 
-                new File(System.getProperty("user.home") + "/desktop/" + prefix + "Pictures").mkdirs();
-
+                createFolder("Pictures");
             }
 
             if (chBoxVideos.isSelected()) {
 
-                new File(System.getProperty("user.home") + "/desktop/" + prefix + "Videos").mkdirs();
-
-            }
-
-            if (chBoxNotepad.isSelected()) {
-
-                new File(System.getProperty("user.home") + "/desktop" + "/" + prefix + "Notepads").mkdirs();
+                createFolder("Videos");
             }
 
             if (chBoxCompressed.isSelected()) {
 
-                new File(System.getProperty("user.home") + "/desktop/" + prefix + "Compressed").mkdirs();
+                createFolder("Compressed");
 
             }
+
         } catch (Exception e) {
+
         }
 
-        File[] files = new File(System.getProperty("user.home") + "/desktop").listFiles();
+        File[] Desktopfiles = new File(System.getProperty("user.home") + "/desktop").listFiles();
 
-        for (File file : files) {
+        for (File file : Desktopfiles) {
+
             try {
+
                 if (chBoxDocuments.isSelected()) {
 
-                    if (file.toString().endsWith(".pdf") || file.toString().endsWith(".doc") || file.toString().endsWith(".docx")
-                            || file.toString().endsWith(".xls") || file.toString().endsWith(".xlsx") || file.toString().endsWith(".rtf")) {
+                    if (file.toString().endsWith(".pdf")
+                            || file.toString().endsWith(".txt")
+                            || file.toString().endsWith(".doc")
+                            || file.toString().endsWith(".docx")
+                            || file.toString().endsWith(".xls")
+                            || file.toString().endsWith(".xlsx")
+                            || file.toString().endsWith(".ppt")
+                            || file.toString().endsWith(".pptx")
+                            || file.toString().endsWith(".rtf")) {
 
-                        Path fileMove = Paths.get(System.getProperty("user.home") + "/desktop/" + prefix + "Documents/" + file.getName());
-
-                        Files.move(file.toPath(), fileMove, StandardCopyOption.REPLACE_EXISTING);
+                        moveToFolder(file, "Documents");
 
                     }
 
@@ -112,60 +154,64 @@ public class FXMLDocumentController implements Initializable {
 
                 if (chBoxMusic.isSelected()) {
 
-                    if (file.toString().endsWith(".mp3") || file.toString().endsWith(".wav") || file.toString().endsWith(".flac") || file.toString().endsWith(".wma")) {
+                    if (file.toString().endsWith(".mp3")
+                            || file.toString().endsWith(".wav")
+                            || file.toString().endsWith(".flac")
+                            || file.toString().endsWith(".wma")) {
 
-                        Path fileMove = Paths.get(System.getProperty("user.home") + "/desktop/" + prefix + "Music/" + file.getName());
-
-                        Files.move(file.toPath(), fileMove, StandardCopyOption.REPLACE_EXISTING);
+                        moveToFolder(file, "Music");
 
                     }
                 }
 
                 if (chBoxPictures.isSelected()) {
 
-                    if (file.toString().endsWith(".jpg") || file.toString().endsWith(".jpeg") || file.toString().endsWith(".gif")
-                            || file.toString().endsWith(".bmp") || file.toString().endsWith(".png")) {
+                    if (file.toString().endsWith(".jpg")
+                            || file.toString().endsWith(".jpeg")
+                            || file.toString().endsWith(".gif")
+                            || file.toString().endsWith(".bmp")
+                            || file.toString().endsWith(".png")) {
 
-                        Path fileMove = Paths.get(System.getProperty("user.home") + "/desktop/" + prefix + "Pictures/" + file.getName());
-
-                        Files.move(file.toPath(), fileMove, StandardCopyOption.REPLACE_EXISTING);
+                        moveToFolder(file, "Pictures");
 
                     }
+
                 }
 
                 if (chBoxVideos.isSelected()) {
-                    if (file.toString().endsWith(".mp4") || file.toString().endsWith(".avi") || file.toString().endsWith(".3gp") || file.toString().endsWith(".mpeg")
-                            || file.toString().endsWith(".mpg")) {
+                    if (file.toString().endsWith(".mp4")
+                            || file.toString().endsWith(".avi")
+                            || file.toString().endsWith(".3gp")
+                            || file.toString().endsWith(".mpeg")
+                            || file.toString().endsWith(".mpg")
+                            || file.toString().endsWith(".mkv")
+                            || file.toString().endsWith(".m4v")
+                            || file.toString().endsWith(".flv")
+                            || file.toString().endsWith(".srt")) {
 
-                        Path fileMove = Paths.get(System.getProperty("user.home") + "/desktop/" + prefix + "Videos/" + file.getName());
-
-                        Files.move(file.toPath(), fileMove, StandardCopyOption.REPLACE_EXISTING);
-
-                    }
-                }
-
-                if (chBoxNotepad.isSelected()) {
-
-                    if (file.toString().endsWith(".txt")) {
-
-                        Path fileMove = Paths.get(System.getProperty("user.home") + "/desktop/" + prefix + "Notepads/" + file.getName());
-
-                        Files.move(file.toPath(), fileMove, StandardCopyOption.REPLACE_EXISTING);
+                        moveToFolder(file, "Videos");
 
                     }
                 }
 
                 if (chBoxCompressed.isSelected()) {
 
-                    if (file.toString().endsWith(".zip") || file.toString().endsWith(".cab") || file.toString().endsWith(".7z") || file.toString().endsWith(".ace")
-                            || file.toString().endsWith(".alz") || file.toString().endsWith(".arj") || file.toString().endsWith(".bz2")
-                            || file.toString().endsWith(".bzip2") || file.toString().endsWith(".gzip") || file.toString().endsWith(".rar")
-                            || file.toString().endsWith(".tar") || file.toString().endsWith(".tar.gz") || file.toString().endsWith(".lzma")
+                    if (file.toString().endsWith(".zip")
+                            || file.toString().endsWith(".rar")
+                            || file.toString().endsWith(".7z")
+                            || file.toString().endsWith(".cab")
+                            || file.toString().endsWith(".ace")
+                            || file.toString().endsWith(".alz")
+                            || file.toString().endsWith(".arj")
+                            || file.toString().endsWith(".bz2")
+                            || file.toString().endsWith(".bzip2")
+                            || file.toString().endsWith(".gzip")
+                            || file.toString().endsWith(".tar")
+                            || file.toString().endsWith(".tar.gz")
+                            || file.toString().endsWith(".lzma")
                             || file.toString().endsWith(".lzip")) {
 
-                        Path fileMove = Paths.get(System.getProperty("user.home") + "/desktop/" + prefix + "Compressed/" + file.getName());
-
-                        Files.move(file.toPath(), fileMove, StandardCopyOption.REPLACE_EXISTING);
+                        moveToFolder(file, "Compressed");
 
                     }
                 }
